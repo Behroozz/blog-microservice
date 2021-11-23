@@ -1,0 +1,17 @@
+apiVersion: apps/v1 # k apply -f posts-depl.yaml
+kind: Deployment
+metadata:
+  name: posts-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: posts # find all the pods with the label of app posts
+  template:
+    metadata:
+      labels:
+        app: posts # we want the pod to have label of posts
+    spec:
+      containers: # array of images
+        - name:  posts
+          image: blog/posts:latest # use latest tag
