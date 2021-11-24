@@ -67,3 +67,21 @@ NodePort
 Expose service through Internal network VM's also external to k8s ip/name:port
 LoadBalancer
 Expose service through External world or whatever you defined in your LB.
+
+
+# Load Balancer
+- Load Balancer Service:
+  Getting Traffic to single pod
+
+  Outide of the the Cluser
+
+- Ingress
+  Pod that have set of routing rules in it and work with LB
+
+
+Outside world --> Load balancer --> Ingress --> [cluster ip setvice]Pods
+# Ingress 
+https://kubernetes.github.io/ingress-nginx/deploy/#quick-start
+
+# client
+docker build -t btabe0914/client .

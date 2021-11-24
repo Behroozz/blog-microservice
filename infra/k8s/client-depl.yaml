@@ -1,0 +1,33 @@
+apiVersion: apps/v1 # k apply -f comments-depl.yaml
+kind: Deployment
+metadata:
+  name: client-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: client # find all the pods with the label of app posts
+  template:
+    metadata:
+      labels:
+        app: client # we want the pod to have label of posts
+    spec:
+      containers: # array of images
+        - name:  client
+          image: btabe0914/client # use latest tag
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: client-srv
+spec:
+  type: ClusterIP # expose pods to outside worlds
+  selector:
+    app: client
+  ports:
+    - name: client
+      protocol: TCP
+      port: 3000
+      targetPort: 3000
+
+
