@@ -1,0 +1,31 @@
+apiVersion: apps/v1 # k apply -f moderation-depl.yaml
+kind: Deployment
+metadata:
+  name: moderation-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: moderation # find all the pods with the label of app posts
+  template:
+    metadata:
+      labels:
+        app: moderation # we want the pod to have label of posts
+    spec:
+      containers: # array of images
+        - name:  moderation
+          image: btabe0914/moderation # use latest tag
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: moderation-srv
+spec:
+  type: ClusterIP # expose pods to outside worlds
+  selector:
+    app: moderation
+  ports:
+    - name: moderation
+      protocol: TCP
+      port: 4003
+      targetPort: 4003

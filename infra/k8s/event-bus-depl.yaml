@@ -1,0 +1,33 @@
+apiVersion: apps/v1 # k apply -f event-bus-depl.yaml
+kind: Deployment
+metadata:
+  name: event-bus-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: event-bus # find all the pods with the label of app posts
+  template:
+    metadata:
+      labels:
+        app: event-bus # we want the pod to have label of posts
+    spec:
+      containers: # array of images
+        - name:  event-bus
+          image: btabe0914/event-bus # use latest tag
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: event-bus-srv
+spec:
+  type: ClusterIP # expose pods to outside worlds
+  selector:
+    app: event-bus
+  ports:
+    - name: event-bus
+      protocol: TCP
+      port: 4005
+      targetPort: 4005 
+
+

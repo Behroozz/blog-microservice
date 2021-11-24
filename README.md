@@ -1,9 +1,9 @@
 # blog-microservice
 
 Post 
-docker build -t blog/post .
-docker run blog/post
-docker run -it blog/post sh
+docker build -t blog/posts .
+docker run blog/posts
+docker run -it blog/posts sh
 
 docker ps
 
@@ -35,3 +35,35 @@ k apply -f config.yaml
 k get deployments
 k describe deployment posts-depl
 k delete deployment posts-depl
+
+k rollout restart deployments posts-depl
+
+# Kubernetee Deployment
+docker login -u "btabe0914" -p "" docker.io
+create reposityory
+docker tag blog/posts btabe0914/blog-posts
+docker push btabe0914/blog-posts
+kubectl rollout restart deployment posts-depl
+
+# Service
+k apply -f posts-srv.yaml
+k get services
+k describe service posts-srv
+access post --> http://localhost:30133/posts
+
+Apply app:
+k apply -f .
+
+# event bus
+docker build -t btabe0914/event-bus .
+k apply -f event-bus-depl.yaml
+
+# pods communication
+Create a Cluster IP Service and use the Service name
+
+ClusterIp:
+Expose service through k8s cluster with ip/name:port
+NodePort
+Expose service through Internal network VM's also external to k8s ip/name:port
+LoadBalancer
+Expose service through External world or whatever you defined in your LB.

@@ -1,0 +1,33 @@
+apiVersion: apps/v1 # k apply -f comments-depl.yaml
+kind: Deployment
+metadata:
+  name: comments-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: comments # find all the pods with the label of app posts
+  template:
+    metadata:
+      labels:
+        app: comments # we want the pod to have label of posts
+    spec:
+      containers: # array of images
+        - name:  comments
+          image: btabe0914/comments # use latest tag
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: comments-srv
+spec:
+  type: ClusterIP # expose pods to outside worlds
+  selector:
+    app: comments
+  ports:
+    - name: comments
+      protocol: TCP
+      port: 4001
+      targetPort: 4001
+
+
