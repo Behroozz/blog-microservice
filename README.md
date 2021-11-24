@@ -85,3 +85,7 @@ https://kubernetes.github.io/ingress-nginx/deploy/#quick-start
 
 # client
 docker build -t btabe0914/client .
+
+# skaffold
+https://skaffold.dev/
+brew install skaffold
